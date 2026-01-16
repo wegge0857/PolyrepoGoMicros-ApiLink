@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package api.user.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/wegge0857/PolyrepoGoMicros-ApiLink/user/v1;user";
+option java_multiple_files = true;
+option java_package = "api.user.v1";
+option java_outer_classname = "UserProto";
+
+service User {
+	rpc CreateUser (CreateUserRequest) returns (CreateUserReply);
+	rpc UpdateUser (UpdateUserRequest) returns (UpdateUserReply);
+	rpc DeleteUser (DeleteUserRequest) returns (DeleteUserReply);
+
+	rpc ListUser (ListUserRequest) returns (ListUserReply);
+
+	rpc GetUser (GetUserRequest) returns (GetUserReply){
+		option (google.api.http) = {
+			get: "/user/{id}"
+		};
+	};
+}
+
+message GetUserRequest {
+    int64 id = 1;
+}
+
+message GetUserReply {
+    int64 id = 1;
+    string name = 2;
+    string email = 3;
+}
+
+message CreateUserRequest {}
+message CreateUserReply {}
+
+message UpdateUserRequest {}
+message UpdateUserReply {}
+
+message DeleteUserRequest {}
+message DeleteUserReply {}
+
+
+
+message ListUserRequest {}
+message ListUserReply {}

@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package api.etf.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/wegge0857/PolyrepoGoMicros-ApiLink/eft/v1;etf";
+option java_multiple_files = true;
+option java_package = "api.etf.v1";
+option java_outer_classname = "EtfProto";
+
+service Etf {
+	rpc CreateEtf (CreateEtfRequest) returns (CreateEtfReply);
+	rpc UpdateEtf (UpdateEtfRequest) returns (UpdateEtfReply);
+	rpc DeleteEtf (DeleteEtfRequest) returns (DeleteEtfReply);
+
+	rpc ListEtf (ListEtfRequest) returns (ListEtfReply);
+
+	rpc GetEtf (GetEtfRequest) returns (GetEtfReply){
+		option (google.api.http) = {
+			get: "/etf/{id}"
+		};
+	};
+}
+
+message GetEtfRequest {
+    int64 id = 1;
+}
+
+message GetEtfReply {
+    int64 id = 1;
+    string name = 2;
+    double ten_y_cagr = 3; //近十年年化收益率 double精度达15位，float精度只有7位
+}
+
+message CreateEtfRequest {}
+message CreateEtfReply {}
+
+message UpdateEtfRequest {}
+message UpdateEtfReply {}
+
+message DeleteEtfRequest {}
+message DeleteEtfReply {}
+
+
+
+message ListEtfRequest {}
+message ListEtfReply {}
