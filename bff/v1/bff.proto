@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package api.bff.v1;
+
+import "google/api/annotations.proto";
+import "user/v1/user.proto";
+
+option go_package = "github.com/wegge0857/PolyrepoGoMicros-ApiLink/bff/v1;bff";
+option java_multiple_files = true;
+option java_package = "api.bff.v1";
+option java_outer_classname = "BffProto";
+
+service Bff {
+
+	rpc GetUser (GetUserRequest) returns (BffUserReply){
+		option (google.api.http) = {
+			get: "/api/user/{id}"
+		};
+	};
+}
+
+// 3. BFF 层的请求体（如果逻辑透传，也可以直接用 api.user.v1.GetUserRequest）
+message GetUserRequest {
+    int64 id = 1;
+}
+
+// 4. 统一响应包装格式
+message BffUserReply {
+    int32 code = 1;      // 状态码 (如 200, 400, 500)
+    string message = 2;   // 提示信息
+    // 5. 关键点：将 user.proto 里的 GetUserReply 作为 data 字段
+    // 注意：必须带上 user.proto 定义的 package 前缀
+    api.user.v1.GetUserReply data = 3;
+}

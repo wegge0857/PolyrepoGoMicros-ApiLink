@@ -4,7 +4,7 @@ package api.etf.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "github.com/wegge0857/PolyrepoGoMicros-ApiLink/eft/v1;etf";
+option go_package = "github.com/wegge0857/PolyrepoGoMicros-ApiLink/etf/v1;etf";
 option java_multiple_files = true;
 option java_package = "api.etf.v1";
 option java_outer_classname = "EtfProto";
