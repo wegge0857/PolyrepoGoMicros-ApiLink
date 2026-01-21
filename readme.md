@@ -1,6 +1,4 @@
-# Developed by @Viggo Van
-[Email](mailto:wayne3van@gmail.com)
-
+# Developed by @[Viggo Van](mailto:wayne3van@gmail.com)
 
 ### 多仓库go语言微服务-apiLink
 ### github.com/wegge0857/PolyrepoGoMicros-ApiLink
