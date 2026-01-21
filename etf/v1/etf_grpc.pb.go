@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Etf_CreateEtf_FullMethodName = "/api.etf.v1.Etf/CreateEtf"
-	Etf_UpdateEtf_FullMethodName = "/api.etf.v1.Etf/UpdateEtf"
-	Etf_DeleteEtf_FullMethodName = "/api.etf.v1.Etf/DeleteEtf"
-	Etf_ListEtf_FullMethodName   = "/api.etf.v1.Etf/ListEtf"
-	Etf_GetEtf_FullMethodName    = "/api.etf.v1.Etf/GetEtf"
+	Etf_CreateEtf_FullMethodName  = "/api.etf.v1.Etf/CreateEtf"
+	Etf_UpdateEtf_FullMethodName  = "/api.etf.v1.Etf/UpdateEtf"
+	Etf_DeleteEtf_FullMethodName  = "/api.etf.v1.Etf/DeleteEtf"
+	Etf_ListEtf_FullMethodName    = "/api.etf.v1.Etf/ListEtf"
+	Etf_GetEtf_FullMethodName     = "/api.etf.v1.Etf/GetEtf"
+	Etf_UpdateStar_FullMethodName = "/api.etf.v1.Etf/UpdateStar"
 )
 
 // EtfClient is the client API for Etf service.
@@ -35,6 +36,8 @@ type EtfClient interface {
 	DeleteEtf(ctx context.Context, in *DeleteEtfRequest, opts ...grpc.CallOption) (*DeleteEtfReply, error)
 	ListEtf(ctx context.Context, in *ListEtfRequest, opts ...grpc.CallOption) (*ListEtfReply, error)
 	GetEtf(ctx context.Context, in *GetEtfRequest, opts ...grpc.CallOption) (*GetEtfReply, error)
+	// 更新收藏数量
+	UpdateStar(ctx context.Context, in *UpdateStarRequest, opts ...grpc.CallOption) (*UpdateStarReply, error)
 }
 
 type etfClient struct {
@@ -95,6 +98,16 @@ func (c *etfClient) GetEtf(ctx context.Context, in *GetEtfRequest, opts ...grpc.
 	return out, nil
 }
 
+func (c *etfClient) UpdateStar(ctx context.Context, in *UpdateStarRequest, opts ...grpc.CallOption) (*UpdateStarReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateStarReply)
+	err := c.cc.Invoke(ctx, Etf_UpdateStar_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // EtfServer is the server API for Etf service.
 // All implementations must embed UnimplementedEtfServer
 // for forward compatibility.
@@ -104,6 +117,8 @@ type EtfServer interface {
 	DeleteEtf(context.Context, *DeleteEtfRequest) (*DeleteEtfReply, error)
 	ListEtf(context.Context, *ListEtfRequest) (*ListEtfReply, error)
 	GetEtf(context.Context, *GetEtfRequest) (*GetEtfReply, error)
+	// 更新收藏数量
+	UpdateStar(context.Context, *UpdateStarRequest) (*UpdateStarReply, error)
 	mustEmbedUnimplementedEtfServer()
 }
 
@@ -128,6 +143,9 @@ func (UnimplementedEtfServer) ListEtf(context.Context, *ListEtfRequest) (*ListEt
 }
 func (UnimplementedEtfServer) GetEtf(context.Context, *GetEtfRequest) (*GetEtfReply, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetEtf not implemented")
+}
+func (UnimplementedEtfServer) UpdateStar(context.Context, *UpdateStarRequest) (*UpdateStarReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateStar not implemented")
 }
 func (UnimplementedEtfServer) mustEmbedUnimplementedEtfServer() {}
 func (UnimplementedEtfServer) testEmbeddedByValue()             {}
@@ -240,6 +258,24 @@ func _Etf_GetEtf_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Etf_UpdateStar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStarRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EtfServer).UpdateStar(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Etf_UpdateStar_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EtfServer).UpdateStar(ctx, req.(*UpdateStarRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Etf_ServiceDesc is the grpc.ServiceDesc for Etf service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +302,10 @@ var Etf_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetEtf",
 			Handler:    _Etf_GetEtf_Handler,
+		},
+		{
+			MethodName: "UpdateStar",
+			Handler:    _Etf_UpdateStar_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

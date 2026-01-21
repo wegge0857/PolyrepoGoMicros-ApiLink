@@ -21,6 +21,13 @@ service User {
 			get: "/user/{id}"
 		};
 	};
+	// 添加或取消收藏记录
+	rpc UserStarRecord (UserStarRecordRequest) returns (UserStarRecordReply) {
+		option (google.api.http) = {
+			post: "/user/UserStraRecord",
+			body: "*"
+		};
+	}
 }
 
 message GetUserRequest {
@@ -32,6 +39,14 @@ message GetUserReply {
     string name = 2;
     string email = 3;
 }
+
+message UserStarRecordRequest {
+	int64 user_id = 1;
+	int64 etf_id = 2;
+	string kind = 3; // 操作类型：例如 "+" 代表加，"-" 代表删除
+}
+
+message UserStarRecordReply {}
 
 message CreateUserRequest {}
 message CreateUserReply {}

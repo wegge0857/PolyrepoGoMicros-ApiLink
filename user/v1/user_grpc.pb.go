@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	User_CreateUser_FullMethodName = "/api.user.v1.User/CreateUser"
-	User_UpdateUser_FullMethodName = "/api.user.v1.User/UpdateUser"
-	User_DeleteUser_FullMethodName = "/api.user.v1.User/DeleteUser"
-	User_ListUser_FullMethodName   = "/api.user.v1.User/ListUser"
-	User_GetUser_FullMethodName    = "/api.user.v1.User/GetUser"
+	User_CreateUser_FullMethodName     = "/api.user.v1.User/CreateUser"
+	User_UpdateUser_FullMethodName     = "/api.user.v1.User/UpdateUser"
+	User_DeleteUser_FullMethodName     = "/api.user.v1.User/DeleteUser"
+	User_ListUser_FullMethodName       = "/api.user.v1.User/ListUser"
+	User_GetUser_FullMethodName        = "/api.user.v1.User/GetUser"
+	User_UserStarRecord_FullMethodName = "/api.user.v1.User/UserStarRecord"
 )
 
 // UserClient is the client API for User service.
@@ -35,6 +36,8 @@ type UserClient interface {
 	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserReply, error)
 	ListUser(ctx context.Context, in *ListUserRequest, opts ...grpc.CallOption) (*ListUserReply, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserReply, error)
+	// 添加或取消收藏记录
+	UserStarRecord(ctx context.Context, in *UserStarRecordRequest, opts ...grpc.CallOption) (*UserStarRecordReply, error)
 }
 
 type userClient struct {
@@ -95,6 +98,16 @@ func (c *userClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...gr
 	return out, nil
 }
 
+func (c *userClient) UserStarRecord(ctx context.Context, in *UserStarRecordRequest, opts ...grpc.CallOption) (*UserStarRecordReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserStarRecordReply)
+	err := c.cc.Invoke(ctx, User_UserStarRecord_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility.
@@ -104,6 +117,8 @@ type UserServer interface {
 	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserReply, error)
 	ListUser(context.Context, *ListUserRequest) (*ListUserReply, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserReply, error)
+	// 添加或取消收藏记录
+	UserStarRecord(context.Context, *UserStarRecordRequest) (*UserStarRecordReply, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -128,6 +143,9 @@ func (UnimplementedUserServer) ListUser(context.Context, *ListUserRequest) (*Lis
 }
 func (UnimplementedUserServer) GetUser(context.Context, *GetUserRequest) (*GetUserReply, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetUser not implemented")
+}
+func (UnimplementedUserServer) UserStarRecord(context.Context, *UserStarRecordRequest) (*UserStarRecordReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method UserStarRecord not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 func (UnimplementedUserServer) testEmbeddedByValue()              {}
@@ -240,6 +258,24 @@ func _User_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_UserStarRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserStarRecordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UserStarRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_UserStarRecord_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UserStarRecord(ctx, req.(*UserStarRecordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +302,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUser",
 			Handler:    _User_GetUser_Handler,
+		},
+		{
+			MethodName: "UserStarRecord",
+			Handler:    _User_UserStarRecord_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

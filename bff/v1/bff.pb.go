@@ -7,6 +7,7 @@
 package bff
 
 import (
+	v11 "github.com/wegge0857/PolyrepoGoMicros-ApiLink/etf/v1"
 	v1 "github.com/wegge0857/PolyrepoGoMicros-ApiLink/user/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -131,20 +132,132 @@ func (x *BffUserReply) GetData() *v1.GetUserReply {
 	return nil
 }
 
+type BffUpdateStarRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Param         *v11.UpdateStarRequest `protobuf:"bytes,1,opt,name=param,proto3" json:"param,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BffUpdateStarRequest) Reset() {
+	*x = BffUpdateStarRequest{}
+	mi := &file_bff_v1_bff_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BffUpdateStarRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BffUpdateStarRequest) ProtoMessage() {}
+
+func (x *BffUpdateStarRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_bff_v1_bff_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BffUpdateStarRequest.ProtoReflect.Descriptor instead.
+func (*BffUpdateStarRequest) Descriptor() ([]byte, []int) {
+	return file_bff_v1_bff_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *BffUpdateStarRequest) GetParam() *v11.UpdateStarRequest {
+	if x != nil {
+		return x.Param
+	}
+	return nil
+}
+
+type BffUpdateStarReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`      // 状态码 (如 200, 400, 500)
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"` // 提示信息
+	Data          *v11.UpdateStarReply   `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BffUpdateStarReply) Reset() {
+	*x = BffUpdateStarReply{}
+	mi := &file_bff_v1_bff_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BffUpdateStarReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BffUpdateStarReply) ProtoMessage() {}
+
+func (x *BffUpdateStarReply) ProtoReflect() protoreflect.Message {
+	mi := &file_bff_v1_bff_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BffUpdateStarReply.ProtoReflect.Descriptor instead.
+func (*BffUpdateStarReply) Descriptor() ([]byte, []int) {
+	return file_bff_v1_bff_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *BffUpdateStarReply) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *BffUpdateStarReply) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *BffUpdateStarReply) GetData() *v11.UpdateStarReply {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 var File_bff_v1_bff_proto protoreflect.FileDescriptor
 
 const file_bff_v1_bff_proto_rawDesc = "" +
 	"\n" +
 	"\x10bff/v1/bff.proto\x12\n" +
-	"api.bff.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x12user/v1/user.proto\" \n" +
+	"api.bff.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x12user/v1/user.proto\x1a\x10etf/v1/etf.proto\" \n" +
 	"\x0eGetUserRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\"k\n" +
 	"\fBffUserReply\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x12-\n" +
-	"\x04data\x18\x03 \x01(\v2\x19.api.user.v1.GetUserReplyR\x04data2^\n" +
+	"\x04data\x18\x03 \x01(\v2\x19.api.user.v1.GetUserReplyR\x04data\"K\n" +
+	"\x14BffUpdateStarRequest\x123\n" +
+	"\x05param\x18\x01 \x01(\v2\x1d.api.etf.v1.UpdateStarRequestR\x05param\"s\n" +
+	"\x12BffUpdateStarReply\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12/\n" +
+	"\x04data\x18\x03 \x01(\v2\x1b.api.etf.v1.UpdateStarReplyR\x04data2\xd3\x01\n" +
 	"\x03Bff\x12W\n" +
-	"\aGetUser\x12\x1a.api.bff.v1.GetUserRequest\x1a\x18.api.bff.v1.BffUserReply\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/api/user/{id}BR\n" +
+	"\aGetUser\x12\x1a.api.bff.v1.GetUserRequest\x1a\x18.api.bff.v1.BffUserReply\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/api/user/{id}\x12s\n" +
+	"\n" +
+	"UpdateStar\x12 .api.bff.v1.BffUpdateStarRequest\x1a\x1e.api.bff.v1.BffUpdateStarReply\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/api/etf/{param.id}/starBR\n" +
 	"\n" +
 	"api.bff.v1B\bBffProtoP\x01Z8github.com/wegge0857/PolyrepoGoMicros-ApiLink/bff/v1;bffb\x06proto3"
 
@@ -160,21 +273,29 @@ func file_bff_v1_bff_proto_rawDescGZIP() []byte {
 	return file_bff_v1_bff_proto_rawDescData
 }
 
-var file_bff_v1_bff_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_bff_v1_bff_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_bff_v1_bff_proto_goTypes = []any{
-	(*GetUserRequest)(nil),  // 0: api.bff.v1.GetUserRequest
-	(*BffUserReply)(nil),    // 1: api.bff.v1.BffUserReply
-	(*v1.GetUserReply)(nil), // 2: api.user.v1.GetUserReply
+	(*GetUserRequest)(nil),        // 0: api.bff.v1.GetUserRequest
+	(*BffUserReply)(nil),          // 1: api.bff.v1.BffUserReply
+	(*BffUpdateStarRequest)(nil),  // 2: api.bff.v1.BffUpdateStarRequest
+	(*BffUpdateStarReply)(nil),    // 3: api.bff.v1.BffUpdateStarReply
+	(*v1.GetUserReply)(nil),       // 4: api.user.v1.GetUserReply
+	(*v11.UpdateStarRequest)(nil), // 5: api.etf.v1.UpdateStarRequest
+	(*v11.UpdateStarReply)(nil),   // 6: api.etf.v1.UpdateStarReply
 }
 var file_bff_v1_bff_proto_depIdxs = []int32{
-	2, // 0: api.bff.v1.BffUserReply.data:type_name -> api.user.v1.GetUserReply
-	0, // 1: api.bff.v1.Bff.GetUser:input_type -> api.bff.v1.GetUserRequest
-	1, // 2: api.bff.v1.Bff.GetUser:output_type -> api.bff.v1.BffUserReply
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	4, // 0: api.bff.v1.BffUserReply.data:type_name -> api.user.v1.GetUserReply
+	5, // 1: api.bff.v1.BffUpdateStarRequest.param:type_name -> api.etf.v1.UpdateStarRequest
+	6, // 2: api.bff.v1.BffUpdateStarReply.data:type_name -> api.etf.v1.UpdateStarReply
+	0, // 3: api.bff.v1.Bff.GetUser:input_type -> api.bff.v1.GetUserRequest
+	2, // 4: api.bff.v1.Bff.UpdateStar:input_type -> api.bff.v1.BffUpdateStarRequest
+	1, // 5: api.bff.v1.Bff.GetUser:output_type -> api.bff.v1.BffUserReply
+	3, // 6: api.bff.v1.Bff.UpdateStar:output_type -> api.bff.v1.BffUpdateStarReply
+	5, // [5:7] is the sub-list for method output_type
+	3, // [3:5] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_bff_v1_bff_proto_init() }
@@ -188,7 +309,7 @@ func file_bff_v1_bff_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_bff_v1_bff_proto_rawDesc), len(file_bff_v1_bff_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

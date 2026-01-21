@@ -4,6 +4,7 @@ package api.bff.v1;
 
 import "google/api/annotations.proto";
 import "user/v1/user.proto";
+import "etf/v1/etf.proto";
 
 option go_package = "github.com/wegge0857/PolyrepoGoMicros-ApiLink/bff/v1;bff";
 option java_multiple_files = true;
@@ -17,6 +18,14 @@ service Bff {
 			get: "/api/user/{id}"
 		};
 	};
+
+    // 更新ETF收藏数量
+	rpc UpdateStar (BffUpdateStarRequest) returns (BffUpdateStarReply) {
+		option (google.api.http) = {
+			post: "/api/etf/{param.id}/star",
+			body: "*"
+		};
+	}
 }
 
 // 3. BFF 层的请求体（如果逻辑透传，也可以直接用 api.user.v1.GetUserRequest）
@@ -31,4 +40,13 @@ message BffUserReply {
     // 5. 关键点：将 user.proto 里的 GetUserReply 作为 data 字段
     // 注意：必须带上 user.proto 定义的 package 前缀
     api.user.v1.GetUserReply data = 3;
+}
+
+message BffUpdateStarRequest {
+    api.etf.v1.UpdateStarRequest param = 1;
+}
+message BffUpdateStarReply {
+    int32 code = 1;      // 状态码 (如 200, 400, 500)
+    string message = 2;   // 提示信息
+    api.etf.v1.UpdateStarReply data = 3;
 }

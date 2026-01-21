@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Bff_GetUser_FullMethodName = "/api.bff.v1.Bff/GetUser"
+	Bff_GetUser_FullMethodName    = "/api.bff.v1.Bff/GetUser"
+	Bff_UpdateStar_FullMethodName = "/api.bff.v1.Bff/UpdateStar"
 )
 
 // BffClient is the client API for Bff service.
@@ -27,6 +28,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BffClient interface {
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*BffUserReply, error)
+	// 更新ETF收藏数量
+	UpdateStar(ctx context.Context, in *BffUpdateStarRequest, opts ...grpc.CallOption) (*BffUpdateStarReply, error)
 }
 
 type bffClient struct {
@@ -47,11 +50,23 @@ func (c *bffClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grp
 	return out, nil
 }
 
+func (c *bffClient) UpdateStar(ctx context.Context, in *BffUpdateStarRequest, opts ...grpc.CallOption) (*BffUpdateStarReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BffUpdateStarReply)
+	err := c.cc.Invoke(ctx, Bff_UpdateStar_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BffServer is the server API for Bff service.
 // All implementations must embed UnimplementedBffServer
 // for forward compatibility.
 type BffServer interface {
 	GetUser(context.Context, *GetUserRequest) (*BffUserReply, error)
+	// 更新ETF收藏数量
+	UpdateStar(context.Context, *BffUpdateStarRequest) (*BffUpdateStarReply, error)
 	mustEmbedUnimplementedBffServer()
 }
 
@@ -64,6 +79,9 @@ type UnimplementedBffServer struct{}
 
 func (UnimplementedBffServer) GetUser(context.Context, *GetUserRequest) (*BffUserReply, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetUser not implemented")
+}
+func (UnimplementedBffServer) UpdateStar(context.Context, *BffUpdateStarRequest) (*BffUpdateStarReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateStar not implemented")
 }
 func (UnimplementedBffServer) mustEmbedUnimplementedBffServer() {}
 func (UnimplementedBffServer) testEmbeddedByValue()             {}
@@ -104,6 +122,24 @@ func _Bff_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Bff_UpdateStar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BffUpdateStarRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BffServer).UpdateStar(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Bff_UpdateStar_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BffServer).UpdateStar(ctx, req.(*BffUpdateStarRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Bff_ServiceDesc is the grpc.ServiceDesc for Bff service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +150,10 @@ var Bff_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUser",
 			Handler:    _Bff_GetUser_Handler,
+		},
+		{
+			MethodName: "UpdateStar",
+			Handler:    _Bff_UpdateStar_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -20,14 +20,18 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 const OperationBffGetUser = "/api.bff.v1.Bff/GetUser"
+const OperationBffUpdateStar = "/api.bff.v1.Bff/UpdateStar"
 
 type BffHTTPServer interface {
 	GetUser(context.Context, *GetUserRequest) (*BffUserReply, error)
+	// UpdateStar 更新ETF收藏数量
+	UpdateStar(context.Context, *BffUpdateStarRequest) (*BffUpdateStarReply, error)
 }
 
 func RegisterBffHTTPServer(s *http.Server, srv BffHTTPServer) {
 	r := s.Route("/")
 	r.GET("/api/user/{id}", _Bff_GetUser0_HTTP_Handler(srv))
+	r.POST("/api/etf/{param.id}/star", _Bff_UpdateStar0_HTTP_Handler(srv))
 }
 
 func _Bff_GetUser0_HTTP_Handler(srv BffHTTPServer) func(ctx http.Context) error {
@@ -52,8 +56,35 @@ func _Bff_GetUser0_HTTP_Handler(srv BffHTTPServer) func(ctx http.Context) error 
 	}
 }
 
+func _Bff_UpdateStar0_HTTP_Handler(srv BffHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in BffUpdateStarRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationBffUpdateStar)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.UpdateStar(ctx, req.(*BffUpdateStarRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*BffUpdateStarReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type BffHTTPClient interface {
 	GetUser(ctx context.Context, req *GetUserRequest, opts ...http.CallOption) (rsp *BffUserReply, err error)
+	// UpdateStar 更新ETF收藏数量
+	UpdateStar(ctx context.Context, req *BffUpdateStarRequest, opts ...http.CallOption) (rsp *BffUpdateStarReply, err error)
 }
 
 type BffHTTPClientImpl struct {
@@ -71,6 +102,20 @@ func (c *BffHTTPClientImpl) GetUser(ctx context.Context, in *GetUserRequest, opt
 	opts = append(opts, http.Operation(OperationBffGetUser))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+// UpdateStar 更新ETF收藏数量
+func (c *BffHTTPClientImpl) UpdateStar(ctx context.Context, in *BffUpdateStarRequest, opts ...http.CallOption) (*BffUpdateStarReply, error) {
+	var out BffUpdateStarReply
+	pattern := "/api/etf/{param.id}/star"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationBffUpdateStar))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

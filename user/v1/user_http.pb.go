@@ -20,14 +20,18 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 const OperationUserGetUser = "/api.user.v1.User/GetUser"
+const OperationUserUserStarRecord = "/api.user.v1.User/UserStarRecord"
 
 type UserHTTPServer interface {
 	GetUser(context.Context, *GetUserRequest) (*GetUserReply, error)
+	// UserStarRecord 添加或取消收藏记录
+	UserStarRecord(context.Context, *UserStarRecordRequest) (*UserStarRecordReply, error)
 }
 
 func RegisterUserHTTPServer(s *http.Server, srv UserHTTPServer) {
 	r := s.Route("/")
 	r.GET("/user/{id}", _User_GetUser0_HTTP_Handler(srv))
+	r.POST("/user/UserStraRecord", _User_UserStarRecord0_HTTP_Handler(srv))
 }
 
 func _User_GetUser0_HTTP_Handler(srv UserHTTPServer) func(ctx http.Context) error {
@@ -52,8 +56,32 @@ func _User_GetUser0_HTTP_Handler(srv UserHTTPServer) func(ctx http.Context) erro
 	}
 }
 
+func _User_UserStarRecord0_HTTP_Handler(srv UserHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in UserStarRecordRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationUserUserStarRecord)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.UserStarRecord(ctx, req.(*UserStarRecordRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*UserStarRecordReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type UserHTTPClient interface {
 	GetUser(ctx context.Context, req *GetUserRequest, opts ...http.CallOption) (rsp *GetUserReply, err error)
+	// UserStarRecord 添加或取消收藏记录
+	UserStarRecord(ctx context.Context, req *UserStarRecordRequest, opts ...http.CallOption) (rsp *UserStarRecordReply, err error)
 }
 
 type UserHTTPClientImpl struct {
@@ -71,6 +99,20 @@ func (c *UserHTTPClientImpl) GetUser(ctx context.Context, in *GetUserRequest, op
 	opts = append(opts, http.Operation(OperationUserGetUser))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+// UserStarRecord 添加或取消收藏记录
+func (c *UserHTTPClientImpl) UserStarRecord(ctx context.Context, in *UserStarRecordRequest, opts ...http.CallOption) (*UserStarRecordReply, error) {
+	var out UserStarRecordReply
+	pattern := "/user/UserStraRecord"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationUserUserStarRecord))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

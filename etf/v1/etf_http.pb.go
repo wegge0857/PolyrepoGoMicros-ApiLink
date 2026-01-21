@@ -20,14 +20,18 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 const OperationEtfGetEtf = "/api.etf.v1.Etf/GetEtf"
+const OperationEtfUpdateStar = "/api.etf.v1.Etf/UpdateStar"
 
 type EtfHTTPServer interface {
 	GetEtf(context.Context, *GetEtfRequest) (*GetEtfReply, error)
+	// UpdateStar 更新收藏数量
+	UpdateStar(context.Context, *UpdateStarRequest) (*UpdateStarReply, error)
 }
 
 func RegisterEtfHTTPServer(s *http.Server, srv EtfHTTPServer) {
 	r := s.Route("/")
 	r.GET("/etf/{id}", _Etf_GetEtf0_HTTP_Handler(srv))
+	r.POST("/etf/star", _Etf_UpdateStar0_HTTP_Handler(srv))
 }
 
 func _Etf_GetEtf0_HTTP_Handler(srv EtfHTTPServer) func(ctx http.Context) error {
@@ -52,8 +56,32 @@ func _Etf_GetEtf0_HTTP_Handler(srv EtfHTTPServer) func(ctx http.Context) error {
 	}
 }
 
+func _Etf_UpdateStar0_HTTP_Handler(srv EtfHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in UpdateStarRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationEtfUpdateStar)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.UpdateStar(ctx, req.(*UpdateStarRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*UpdateStarReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type EtfHTTPClient interface {
 	GetEtf(ctx context.Context, req *GetEtfRequest, opts ...http.CallOption) (rsp *GetEtfReply, err error)
+	// UpdateStar 更新收藏数量
+	UpdateStar(ctx context.Context, req *UpdateStarRequest, opts ...http.CallOption) (rsp *UpdateStarReply, err error)
 }
 
 type EtfHTTPClientImpl struct {
@@ -71,6 +99,20 @@ func (c *EtfHTTPClientImpl) GetEtf(ctx context.Context, in *GetEtfRequest, opts 
 	opts = append(opts, http.Operation(OperationEtfGetEtf))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+// UpdateStar 更新收藏数量
+func (c *EtfHTTPClientImpl) UpdateStar(ctx context.Context, in *UpdateStarRequest, opts ...http.CallOption) (*UpdateStarReply, error) {
+	var out UpdateStarReply
+	pattern := "/etf/star"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationEtfUpdateStar))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

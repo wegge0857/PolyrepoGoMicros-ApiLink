@@ -126,6 +126,105 @@ func (x *GetEtfReply) GetTenYCagr() float64 {
 	return 0
 }
 
+type UpdateStarRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ETF 的唯一 ID
+	Id int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// 操作类型：例如 "+" 代表加，"-" 代表减
+	Kind          string `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateStarRequest) Reset() {
+	*x = UpdateStarRequest{}
+	mi := &file_etf_v1_etf_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateStarRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateStarRequest) ProtoMessage() {}
+
+func (x *UpdateStarRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_etf_v1_etf_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateStarRequest.ProtoReflect.Descriptor instead.
+func (*UpdateStarRequest) Descriptor() ([]byte, []int) {
+	return file_etf_v1_etf_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *UpdateStarRequest) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdateStarRequest) GetKind() string {
+	if x != nil {
+		return x.Kind
+	}
+	return ""
+}
+
+type UpdateStarReply struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// 可以返回更新后的最新数值，或者只返回成功状态
+	CurrentStar   int64 `protobuf:"varint,1,opt,name=current_star,json=currentStar,proto3" json:"current_star,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateStarReply) Reset() {
+	*x = UpdateStarReply{}
+	mi := &file_etf_v1_etf_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateStarReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateStarReply) ProtoMessage() {}
+
+func (x *UpdateStarReply) ProtoReflect() protoreflect.Message {
+	mi := &file_etf_v1_etf_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateStarReply.ProtoReflect.Descriptor instead.
+func (*UpdateStarReply) Descriptor() ([]byte, []int) {
+	return file_etf_v1_etf_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *UpdateStarReply) GetCurrentStar() int64 {
+	if x != nil {
+		return x.CurrentStar
+	}
+	return 0
+}
+
 type CreateEtfRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -134,7 +233,7 @@ type CreateEtfRequest struct {
 
 func (x *CreateEtfRequest) Reset() {
 	*x = CreateEtfRequest{}
-	mi := &file_etf_v1_etf_proto_msgTypes[2]
+	mi := &file_etf_v1_etf_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -146,7 +245,7 @@ func (x *CreateEtfRequest) String() string {
 func (*CreateEtfRequest) ProtoMessage() {}
 
 func (x *CreateEtfRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_etf_v1_etf_proto_msgTypes[2]
+	mi := &file_etf_v1_etf_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -159,7 +258,7 @@ func (x *CreateEtfRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateEtfRequest.ProtoReflect.Descriptor instead.
 func (*CreateEtfRequest) Descriptor() ([]byte, []int) {
-	return file_etf_v1_etf_proto_rawDescGZIP(), []int{2}
+	return file_etf_v1_etf_proto_rawDescGZIP(), []int{4}
 }
 
 type CreateEtfReply struct {
@@ -170,7 +269,7 @@ type CreateEtfReply struct {
 
 func (x *CreateEtfReply) Reset() {
 	*x = CreateEtfReply{}
-	mi := &file_etf_v1_etf_proto_msgTypes[3]
+	mi := &file_etf_v1_etf_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -182,7 +281,7 @@ func (x *CreateEtfReply) String() string {
 func (*CreateEtfReply) ProtoMessage() {}
 
 func (x *CreateEtfReply) ProtoReflect() protoreflect.Message {
-	mi := &file_etf_v1_etf_proto_msgTypes[3]
+	mi := &file_etf_v1_etf_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -195,7 +294,7 @@ func (x *CreateEtfReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateEtfReply.ProtoReflect.Descriptor instead.
 func (*CreateEtfReply) Descriptor() ([]byte, []int) {
-	return file_etf_v1_etf_proto_rawDescGZIP(), []int{3}
+	return file_etf_v1_etf_proto_rawDescGZIP(), []int{5}
 }
 
 type UpdateEtfRequest struct {
@@ -206,7 +305,7 @@ type UpdateEtfRequest struct {
 
 func (x *UpdateEtfRequest) Reset() {
 	*x = UpdateEtfRequest{}
-	mi := &file_etf_v1_etf_proto_msgTypes[4]
+	mi := &file_etf_v1_etf_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -218,7 +317,7 @@ func (x *UpdateEtfRequest) String() string {
 func (*UpdateEtfRequest) ProtoMessage() {}
 
 func (x *UpdateEtfRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_etf_v1_etf_proto_msgTypes[4]
+	mi := &file_etf_v1_etf_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -231,7 +330,7 @@ func (x *UpdateEtfRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateEtfRequest.ProtoReflect.Descriptor instead.
 func (*UpdateEtfRequest) Descriptor() ([]byte, []int) {
-	return file_etf_v1_etf_proto_rawDescGZIP(), []int{4}
+	return file_etf_v1_etf_proto_rawDescGZIP(), []int{6}
 }
 
 type UpdateEtfReply struct {
@@ -242,7 +341,7 @@ type UpdateEtfReply struct {
 
 func (x *UpdateEtfReply) Reset() {
 	*x = UpdateEtfReply{}
-	mi := &file_etf_v1_etf_proto_msgTypes[5]
+	mi := &file_etf_v1_etf_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -254,7 +353,7 @@ func (x *UpdateEtfReply) String() string {
 func (*UpdateEtfReply) ProtoMessage() {}
 
 func (x *UpdateEtfReply) ProtoReflect() protoreflect.Message {
-	mi := &file_etf_v1_etf_proto_msgTypes[5]
+	mi := &file_etf_v1_etf_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -267,7 +366,7 @@ func (x *UpdateEtfReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateEtfReply.ProtoReflect.Descriptor instead.
 func (*UpdateEtfReply) Descriptor() ([]byte, []int) {
-	return file_etf_v1_etf_proto_rawDescGZIP(), []int{5}
+	return file_etf_v1_etf_proto_rawDescGZIP(), []int{7}
 }
 
 type DeleteEtfRequest struct {
@@ -278,7 +377,7 @@ type DeleteEtfRequest struct {
 
 func (x *DeleteEtfRequest) Reset() {
 	*x = DeleteEtfRequest{}
-	mi := &file_etf_v1_etf_proto_msgTypes[6]
+	mi := &file_etf_v1_etf_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -290,7 +389,7 @@ func (x *DeleteEtfRequest) String() string {
 func (*DeleteEtfRequest) ProtoMessage() {}
 
 func (x *DeleteEtfRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_etf_v1_etf_proto_msgTypes[6]
+	mi := &file_etf_v1_etf_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -303,7 +402,7 @@ func (x *DeleteEtfRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteEtfRequest.ProtoReflect.Descriptor instead.
 func (*DeleteEtfRequest) Descriptor() ([]byte, []int) {
-	return file_etf_v1_etf_proto_rawDescGZIP(), []int{6}
+	return file_etf_v1_etf_proto_rawDescGZIP(), []int{8}
 }
 
 type DeleteEtfReply struct {
@@ -314,7 +413,7 @@ type DeleteEtfReply struct {
 
 func (x *DeleteEtfReply) Reset() {
 	*x = DeleteEtfReply{}
-	mi := &file_etf_v1_etf_proto_msgTypes[7]
+	mi := &file_etf_v1_etf_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -326,7 +425,7 @@ func (x *DeleteEtfReply) String() string {
 func (*DeleteEtfReply) ProtoMessage() {}
 
 func (x *DeleteEtfReply) ProtoReflect() protoreflect.Message {
-	mi := &file_etf_v1_etf_proto_msgTypes[7]
+	mi := &file_etf_v1_etf_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -339,7 +438,7 @@ func (x *DeleteEtfReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteEtfReply.ProtoReflect.Descriptor instead.
 func (*DeleteEtfReply) Descriptor() ([]byte, []int) {
-	return file_etf_v1_etf_proto_rawDescGZIP(), []int{7}
+	return file_etf_v1_etf_proto_rawDescGZIP(), []int{9}
 }
 
 type ListEtfRequest struct {
@@ -350,7 +449,7 @@ type ListEtfRequest struct {
 
 func (x *ListEtfRequest) Reset() {
 	*x = ListEtfRequest{}
-	mi := &file_etf_v1_etf_proto_msgTypes[8]
+	mi := &file_etf_v1_etf_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -362,7 +461,7 @@ func (x *ListEtfRequest) String() string {
 func (*ListEtfRequest) ProtoMessage() {}
 
 func (x *ListEtfRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_etf_v1_etf_proto_msgTypes[8]
+	mi := &file_etf_v1_etf_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -375,7 +474,7 @@ func (x *ListEtfRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListEtfRequest.ProtoReflect.Descriptor instead.
 func (*ListEtfRequest) Descriptor() ([]byte, []int) {
-	return file_etf_v1_etf_proto_rawDescGZIP(), []int{8}
+	return file_etf_v1_etf_proto_rawDescGZIP(), []int{10}
 }
 
 type ListEtfReply struct {
@@ -386,7 +485,7 @@ type ListEtfReply struct {
 
 func (x *ListEtfReply) Reset() {
 	*x = ListEtfReply{}
-	mi := &file_etf_v1_etf_proto_msgTypes[9]
+	mi := &file_etf_v1_etf_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -398,7 +497,7 @@ func (x *ListEtfReply) String() string {
 func (*ListEtfReply) ProtoMessage() {}
 
 func (x *ListEtfReply) ProtoReflect() protoreflect.Message {
-	mi := &file_etf_v1_etf_proto_msgTypes[9]
+	mi := &file_etf_v1_etf_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -411,7 +510,7 @@ func (x *ListEtfReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListEtfReply.ProtoReflect.Descriptor instead.
 func (*ListEtfReply) Descriptor() ([]byte, []int) {
-	return file_etf_v1_etf_proto_rawDescGZIP(), []int{9}
+	return file_etf_v1_etf_proto_rawDescGZIP(), []int{11}
 }
 
 var File_etf_v1_etf_proto protoreflect.FileDescriptor
@@ -426,7 +525,12 @@ const file_etf_v1_etf_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1c\n" +
 	"\n" +
-	"ten_y_cagr\x18\x03 \x01(\x01R\btenYCagr\"\x12\n" +
+	"ten_y_cagr\x18\x03 \x01(\x01R\btenYCagr\"7\n" +
+	"\x11UpdateStarRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
+	"\x04kind\x18\x02 \x01(\tR\x04kind\"4\n" +
+	"\x0fUpdateStarReply\x12!\n" +
+	"\fcurrent_star\x18\x01 \x01(\x03R\vcurrentStar\"\x12\n" +
 	"\x10CreateEtfRequest\"\x10\n" +
 	"\x0eCreateEtfReply\"\x12\n" +
 	"\x10UpdateEtfRequest\"\x10\n" +
@@ -434,13 +538,15 @@ const file_etf_v1_etf_proto_rawDesc = "" +
 	"\x10DeleteEtfRequest\"\x10\n" +
 	"\x0eDeleteEtfReply\"\x10\n" +
 	"\x0eListEtfRequest\"\x0e\n" +
-	"\fListEtfReply2\xec\x02\n" +
+	"\fListEtfReply2\xcc\x03\n" +
 	"\x03Etf\x12E\n" +
 	"\tCreateEtf\x12\x1c.api.etf.v1.CreateEtfRequest\x1a\x1a.api.etf.v1.CreateEtfReply\x12E\n" +
 	"\tUpdateEtf\x12\x1c.api.etf.v1.UpdateEtfRequest\x1a\x1a.api.etf.v1.UpdateEtfReply\x12E\n" +
 	"\tDeleteEtf\x12\x1c.api.etf.v1.DeleteEtfRequest\x1a\x1a.api.etf.v1.DeleteEtfReply\x12?\n" +
 	"\aListEtf\x12\x1a.api.etf.v1.ListEtfRequest\x1a\x18.api.etf.v1.ListEtfReply\x12O\n" +
-	"\x06GetEtf\x12\x19.api.etf.v1.GetEtfRequest\x1a\x17.api.etf.v1.GetEtfReply\"\x11\x82\xd3\xe4\x93\x02\v\x12\t/etf/{id}BR\n" +
+	"\x06GetEtf\x12\x19.api.etf.v1.GetEtfRequest\x1a\x17.api.etf.v1.GetEtfReply\"\x11\x82\xd3\xe4\x93\x02\v\x12\t/etf/{id}\x12^\n" +
+	"\n" +
+	"UpdateStar\x12\x1d.api.etf.v1.UpdateStarRequest\x1a\x1b.api.etf.v1.UpdateStarReply\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/etf/starBR\n" +
 	"\n" +
 	"api.etf.v1B\bEtfProtoP\x01Z8github.com/wegge0857/PolyrepoGoMicros-ApiLink/etf/v1;etfb\x06proto3"
 
@@ -456,35 +562,39 @@ func file_etf_v1_etf_proto_rawDescGZIP() []byte {
 	return file_etf_v1_etf_proto_rawDescData
 }
 
-var file_etf_v1_etf_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_etf_v1_etf_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_etf_v1_etf_proto_goTypes = []any{
-	(*GetEtfRequest)(nil),    // 0: api.etf.v1.GetEtfRequest
-	(*GetEtfReply)(nil),      // 1: api.etf.v1.GetEtfReply
-	(*CreateEtfRequest)(nil), // 2: api.etf.v1.CreateEtfRequest
-	(*CreateEtfReply)(nil),   // 3: api.etf.v1.CreateEtfReply
-	(*UpdateEtfRequest)(nil), // 4: api.etf.v1.UpdateEtfRequest
-	(*UpdateEtfReply)(nil),   // 5: api.etf.v1.UpdateEtfReply
-	(*DeleteEtfRequest)(nil), // 6: api.etf.v1.DeleteEtfRequest
-	(*DeleteEtfReply)(nil),   // 7: api.etf.v1.DeleteEtfReply
-	(*ListEtfRequest)(nil),   // 8: api.etf.v1.ListEtfRequest
-	(*ListEtfReply)(nil),     // 9: api.etf.v1.ListEtfReply
+	(*GetEtfRequest)(nil),     // 0: api.etf.v1.GetEtfRequest
+	(*GetEtfReply)(nil),       // 1: api.etf.v1.GetEtfReply
+	(*UpdateStarRequest)(nil), // 2: api.etf.v1.UpdateStarRequest
+	(*UpdateStarReply)(nil),   // 3: api.etf.v1.UpdateStarReply
+	(*CreateEtfRequest)(nil),  // 4: api.etf.v1.CreateEtfRequest
+	(*CreateEtfReply)(nil),    // 5: api.etf.v1.CreateEtfReply
+	(*UpdateEtfRequest)(nil),  // 6: api.etf.v1.UpdateEtfRequest
+	(*UpdateEtfReply)(nil),    // 7: api.etf.v1.UpdateEtfReply
+	(*DeleteEtfRequest)(nil),  // 8: api.etf.v1.DeleteEtfRequest
+	(*DeleteEtfReply)(nil),    // 9: api.etf.v1.DeleteEtfReply
+	(*ListEtfRequest)(nil),    // 10: api.etf.v1.ListEtfRequest
+	(*ListEtfReply)(nil),      // 11: api.etf.v1.ListEtfReply
 }
 var file_etf_v1_etf_proto_depIdxs = []int32{
-	2, // 0: api.etf.v1.Etf.CreateEtf:input_type -> api.etf.v1.CreateEtfRequest
-	4, // 1: api.etf.v1.Etf.UpdateEtf:input_type -> api.etf.v1.UpdateEtfRequest
-	6, // 2: api.etf.v1.Etf.DeleteEtf:input_type -> api.etf.v1.DeleteEtfRequest
-	8, // 3: api.etf.v1.Etf.ListEtf:input_type -> api.etf.v1.ListEtfRequest
-	0, // 4: api.etf.v1.Etf.GetEtf:input_type -> api.etf.v1.GetEtfRequest
-	3, // 5: api.etf.v1.Etf.CreateEtf:output_type -> api.etf.v1.CreateEtfReply
-	5, // 6: api.etf.v1.Etf.UpdateEtf:output_type -> api.etf.v1.UpdateEtfReply
-	7, // 7: api.etf.v1.Etf.DeleteEtf:output_type -> api.etf.v1.DeleteEtfReply
-	9, // 8: api.etf.v1.Etf.ListEtf:output_type -> api.etf.v1.ListEtfReply
-	1, // 9: api.etf.v1.Etf.GetEtf:output_type -> api.etf.v1.GetEtfReply
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	4,  // 0: api.etf.v1.Etf.CreateEtf:input_type -> api.etf.v1.CreateEtfRequest
+	6,  // 1: api.etf.v1.Etf.UpdateEtf:input_type -> api.etf.v1.UpdateEtfRequest
+	8,  // 2: api.etf.v1.Etf.DeleteEtf:input_type -> api.etf.v1.DeleteEtfRequest
+	10, // 3: api.etf.v1.Etf.ListEtf:input_type -> api.etf.v1.ListEtfRequest
+	0,  // 4: api.etf.v1.Etf.GetEtf:input_type -> api.etf.v1.GetEtfRequest
+	2,  // 5: api.etf.v1.Etf.UpdateStar:input_type -> api.etf.v1.UpdateStarRequest
+	5,  // 6: api.etf.v1.Etf.CreateEtf:output_type -> api.etf.v1.CreateEtfReply
+	7,  // 7: api.etf.v1.Etf.UpdateEtf:output_type -> api.etf.v1.UpdateEtfReply
+	9,  // 8: api.etf.v1.Etf.DeleteEtf:output_type -> api.etf.v1.DeleteEtfReply
+	11, // 9: api.etf.v1.Etf.ListEtf:output_type -> api.etf.v1.ListEtfReply
+	1,  // 10: api.etf.v1.Etf.GetEtf:output_type -> api.etf.v1.GetEtfReply
+	3,  // 11: api.etf.v1.Etf.UpdateStar:output_type -> api.etf.v1.UpdateStarReply
+	6,  // [6:12] is the sub-list for method output_type
+	0,  // [0:6] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_etf_v1_etf_proto_init() }
@@ -498,7 +608,7 @@ func file_etf_v1_etf_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_etf_v1_etf_proto_rawDesc), len(file_etf_v1_etf_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
