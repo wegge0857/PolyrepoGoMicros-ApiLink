@@ -36,8 +36,9 @@ go install github.com/google/wire/cmd/wire@latest
 wire
 ```
 
+# 端口备注
 ```yaml
-# 端口备注          http            grpc
+微服务              http            grpc
 bffMicros:          8600            9600
 etfMicros:          8601            9602
 userMicros:         8602            9602
