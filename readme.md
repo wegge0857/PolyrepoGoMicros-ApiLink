@@ -37,7 +37,7 @@ wire
 # 端口备注
 ```yaml
 微服务              http            grpc
-bffMicros:          8600            9600
-etfMicros:          8601            9602
+etfMicros:          8601            9601
 userMicros:         8602            9602
+bffMicros:          8603            9603
 ```
